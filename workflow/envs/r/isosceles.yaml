@@ -1,0 +1,24 @@
+name: isosceles
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - r-base=4.4.3
+  - bioconductor-biocneighbors=2.0.0
+  - r-renv=1.1.5
+  - r-biocmanager=1.30.26
+  - bioconductor-s4vectors=0.44.0
+  - bioconductor-biocparallel
+  - bioconductor-biostrings
+  - bioconductor-bsgenome
+  - bioconductor-genomicfeatures
+  - bioconductor-dexseq
+  - bioconductor-scuttle
+  - bioconductor-scran
+  - bioconductor-ggbio
+  - zlib
+  - xz
+  - r-xml
+  - libxml2
+  - pkg-config

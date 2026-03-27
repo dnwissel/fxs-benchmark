@@ -1,0 +1,13 @@
+name: PrimSpotter
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python>=3.10.0 
+  - pandas
+  - pysam
+  - numpy
+  - tqdm
+  - matplotlib
+  - scipy
+  - samtools

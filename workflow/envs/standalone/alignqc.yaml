@@ -1,0 +1,8 @@
+name: alignqc
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+  - vacation
+dependencies:
+  - alignqc=2.0.5

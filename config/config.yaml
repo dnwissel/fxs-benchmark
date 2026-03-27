@@ -1,0 +1,96 @@
+bulk_ill_directory: "/data/roche_fmr1/illumina_bulk"
+bulk_ont_directory: "/data/roche_fmr1/ont_bulk"
+bulk_pb_directory: "/data/roche_fmr1/pacbio_bulk"
+
+
+sc_ill_directory: "/data/roche_fmr1/illumina_sc"
+sc_ont_directory: "/data/roche_fmr1/ont_sc"
+sc_pb_directory: "/data/roche_fmr1/pacbio_sc"
+
+isosceles_version: "f8f8c0bb449ca3e55e6ad2c6e5a1b33070c1d387"
+
+sample_names: ["E3-1", "E3-2", "E3-3", "isoB11-1", "isoB11-2", "isoB11-3"]
+
+snakemake_min_version: "9.11.2"
+miniconda_version: "25.3.1-1"
+seed: 42
+timing_repetitions: 1
+compression_level: 9
+genome_url: "ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/001/405/GCA_000001405.15_GRCh38/seqs_for_alignment_pipelines.ucsc_ids/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz"
+transcriptome_url: "https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_45/gencode.v45.primary_assembly.annotation.gtf.gz"
+sirv_set_one_url: "https://www.lexogen.com/wp-content/uploads/2021/06/SIRV_Set1_Norm_Sequences_20210507.zip"
+sirv_set_four_url: "https://www.lexogen.com/wp-content/uploads/2021/06/SIRV_Set4_Norm_Sequences_20210507.zip"
+
+bulk_ill_trim_galore_min_q: 20
+bulk_ill_trim_galore_min_length: 20
+
+bulk_ont_pychopper_kit: "PCB114"
+bulk_ont_pychopper_y: 10000
+
+align_threads: 12
+map_threads: 12
+sort_bam_memory_gb: 4
+sort_memory_gb: 4
+sort_threads: 4
+
+sirv_transcriptome_name: "SIRV_ERCC_longSIRV_multi-fasta_20210507.gtf"
+sirv_genome_name: "SIRV_ERCC_longSIRV_multi-fasta_20210507.fasta"
+
+align_sort_bam_memory_gb: 4
+align_sort_bam_threads: 4
+align_map_bam_threads: 24
+n_secondary_alignments: 100
+illumina_read_length: 150
+salmon_index_k: 31
+lr_kallisto_index_k: 63
+read_name_sam: "qname"
+
+stall_io_threads: 16
+parallel_threads: 20
+demultiplex_threads: 20
+quantify_threads: 24
+repetitions: 1
+
+discover_isoforms_threads: 12
+
+illumina_trim_min_quality: 20
+illumina_trim_min_length: 20
+
+subsample_numbers_sirv: [1, 2, 3, 4, 5]
+subsample_read_numbers_sirv: [0.01e+6, 0.025e+6, 0.05e+6, 0.1e+6]
+subsample_numbers_gencode: [1]
+subsample_read_numbers_gencode: [5.0e+6, 10.0e+6, 20.0e+6, 30.0e+6]
+
+quantify_isoforms_threads: 6
+
+blaze_sc_kit_version: "3v3"
+
+demultiplex_expect_cells:
+  E3-1: 6451
+  E3-2: 6285
+  E3-3: 7324
+  isoB11-1: 4772
+  isoB11-2: 5674
+  isoB11-3: 5362
+
+salmon_fragment_length_mean: 250
+salmon_fragment_length_sd: 25
+num_bootstraps: 30
+
+liqa_max_distance: 20
+liqa_f_weight: 1
+
+kallisto_bus_threshold: 0.8
+
+oarfish_filter_group: "no-filters"
+bambu_version: "3.10.1"
+
+gffutils_checklines: 1000
+
+three_prime_bias_subsample: 2500
+
+polya_motif_url: "https://raw.githubusercontent.com/ConesaLab/SQANTI3/refs/heads/master/data/polyA_motifs/mouse_and_human.polyA_motif.txt"
+
+qc_sample_number: 1.0e+6
+
+call_orfs_orfanage_mode: "BEST"

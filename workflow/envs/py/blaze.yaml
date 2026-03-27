@@ -1,0 +1,16 @@
+name: blaze
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python=3.7
+  - Biopython
+  - pandas
+  - numpy
+  - tqdm
+  - matplotlib
+  - pip
+  - pip:
+    - fast-edit-distance==1.2.2
+    - blaze2==2.5.1

@@ -1,0 +1,30 @@
+name: formatting_env
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - r-base=4.4.1
+  - r-matrix
+  - r-vroom
+  - r-glue
+  - r-dplyr
+  - r-tibble
+  - bioconductor-singlecellexperiment
+  - bioconductor-scuttle
+  - bioconductor-biocneighbors=2.0.0
+  - r-renv=1.1.1
+  - r-biocmanager
+  - bioconductor-s4vectors
+  - bioconductor-biocparallel
+  - bioconductor-biostrings
+  - bioconductor-bsgenome
+  - bioconductor-genomicfeatures
+  - bioconductor-dexseq
+  - bioconductor-scran
+  - bioconductor-ggbio
+  - zlib
+  - xz
+  - r-xml
+  - libxml2
+  - pkg-config

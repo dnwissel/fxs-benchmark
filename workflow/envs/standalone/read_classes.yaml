@@ -1,0 +1,9 @@
+name: read_classes
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - bioawk=1.0
+  - bedtools
+  - samtools

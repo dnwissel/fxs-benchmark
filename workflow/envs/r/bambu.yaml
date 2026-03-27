@@ -1,0 +1,17 @@
+name: bambu
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - r-base=4.4.3
+  - r-renv=1.1.5
+  - r-biocmanager
+  - bioconductor-delayedmatrixstats
+  - bioconductor-sparsematrixstats
+  - bioconductor-rtracklayer
+  - zlib
+  - xz
+  - r-xml
+  - libxml2
+  - pkg-config

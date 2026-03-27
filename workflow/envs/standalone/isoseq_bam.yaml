@@ -1,0 +1,10 @@
+name: isoseq_bam
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - lima=2.13.0
+  - isoseq=4.3.0
+  - samtools
+  - bam2fastx

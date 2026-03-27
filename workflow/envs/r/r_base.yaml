@@ -1,0 +1,8 @@
+name: r_base
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - bioconductor-rtracklayer=1.62.0
+  - r-vroom

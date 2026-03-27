@@ -1,0 +1,7 @@
+name: jvar
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - jvarkit=2024.08.25

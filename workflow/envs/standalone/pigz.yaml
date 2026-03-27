@@ -1,0 +1,8 @@
+name: pigz
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - samtools=1.19.2
+  - pigz=2.8
