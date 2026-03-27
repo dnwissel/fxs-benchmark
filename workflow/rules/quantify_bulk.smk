@@ -238,7 +238,7 @@ rule quantify_bulk_downsampled_run_bambu_lr:
         reads="results/quantify_downsampled/align_genome_bulk_lr/{subsample_number}_{read_number}/{data_type}/{sample}/{type}/{sample}.aligned.sorted.bam",
         sirv_genome="results/setup/adjust_sirv_names/sirv_set_four.fa",
         gencode_genome="results/setup/download_genome/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna",
-        gencode_transcriptome="results/setup/adjust_transcriptome_assembly_names/gencode.v49.primary_assembly.annotation.named.gtf",
+        gencode_transcriptome="results/setup/adjust_transcriptome_assembly_names/gencode.v45.primary_assembly.annotation.named.gtf",
         sirv_transcriptome="results/setup/adjust_sirv_names/sirv_set_four.gtf",
     output:
         "results/quantify_bulk_downsampled/run_bambu_lr/{subsample_number}_{read_number}/{data_type}/{sample}/{type}/counts_transcript.txt",
@@ -267,7 +267,7 @@ rule quantify_bulk_downsampled_run_isoquant_lr:
         reads="results/quantify_downsampled/align_genome_bulk_lr/{subsample_number}_{read_number}/{data_type}/{sample}/{type}/{sample}.aligned.sorted.bam",
         sirv_genome="results/setup/adjust_sirv_names/sirv_set_four.fa",
         gencode_genome="results/setup/download_genome/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna",
-        gencode_transcriptome="results/setup/adjust_transcriptome_assembly_names/gencode.v49.primary_assembly.annotation.named.gtf",
+        gencode_transcriptome="results/setup/adjust_transcriptome_assembly_names/gencode.v45.primary_assembly.annotation.named.gtf",
         sirv_transcriptome="results/setup/adjust_sirv_names/sirv_set_four.gtf",
     output:
         "results/quantify_bulk_downsampled/run_isoquant_lr/{subsample_number}_{read_number}/{data_type}/{sample}/{type}/OUT/OUT.transcript_counts.tsv",
@@ -341,7 +341,7 @@ rule quantify_bulk_downsampled_run_isosceles_lr:
         reads="results/quantify_downsampled/align_genome_bulk_lr/{subsample_number}_{read_number}/{data_type}/{sample}/{type}/{sample}.aligned.sorted.bam",
         sirv_genome="results/setup/adjust_sirv_names/sirv_set_four.fa",
         gencode_genome="results/setup/download_genome/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna",
-        gencode_transcriptome="results/setup/adjust_transcriptome_assembly_names/gencode.v49.primary_assembly.annotation.named.gtf",
+        gencode_transcriptome="results/setup/adjust_transcriptome_assembly_names/gencode.v45.primary_assembly.annotation.named.gtf",
         sirv_transcriptome="results/setup/adjust_sirv_names/sirv_set_four.gtf",
     output:
         "results/quantify_bulk_downsampled/run_isosceles_lr/{subsample_number}_{read_number}/{data_type}/{sample}/{type}/counts.tsv",
@@ -674,7 +674,7 @@ rule quantify_bulk_downsampled_format:
         gtf=lambda wildcards: (
             "results/setup/standardize_gtf_files/sirv_set_four.gtf"
             if wildcards.data_type != "gencode"
-            else "results/setup/adjust_transcriptome_assembly_names/gencode.v49.primary_assembly.annotation.named.gtf"
+            else "results/setup/adjust_transcriptome_assembly_names/gencode.v45.primary_assembly.annotation.named.gtf"
         ),
     output:
         out_transcript="results/quantify_bulk_downsampled/format/{method}/{subsample_number}_{read_number}/{type}/{data_type}/transcript_counts_formatted.tsv",
@@ -736,7 +736,7 @@ rule quantify_bulk_joint_format:
             "results/quantify_bulk_joint/{{tech}}/run_miniquant_lr/{sample}/abundance.tsv",
             sample=config["sample_names"],
         ),
-        gtf="results/setup/adjust_transcriptome_assembly_names/gencode.v49.primary_assembly.annotation.named.gtf",
+        gtf="results/setup/adjust_transcriptome_assembly_names/gencode.v45.primary_assembly.annotation.named.gtf",
     output:
         out_transcript="results/quantify_bulk_joint_format/format/{tech}/transcript_counts_formatted.tsv",
         out_gene="results/quantify_bulk_joint_format/format/{tech}/gene_counts_formatted.tsv",

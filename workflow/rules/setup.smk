@@ -21,7 +21,7 @@ rule download_genome:
 
 rule download_transcriptome:
     output:
-        "results/setup/download_transcriptome/gencode.v49.primary_assembly.annotation.gtf.gz",
+        "results/setup/download_transcriptome/gencode.v45.primary_assembly.annotation.gtf.gz",
     log:
         "logs/setup/download_transcriptome/out.log",
     params:
@@ -58,9 +58,9 @@ rule download_sirvome:
 rule adjust_transcriptome_assembly_names:
     input:
         genome="results/setup/download_genome/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna",
-        transcriptome="results/setup/download_transcriptome/gencode.v49.primary_assembly.annotation.gtf.gz",
+        transcriptome="results/setup/download_transcriptome/gencode.v45.primary_assembly.annotation.gtf.gz",
     output:
-        "results/setup/adjust_transcriptome_assembly_names/gencode.v49.primary_assembly.annotation.named.gtf",
+        "results/setup/adjust_transcriptome_assembly_names/gencode.v45.primary_assembly.annotation.named.gtf",
     log:
         "logs/setup/adjust_transcriptome_assembly_names/out.log",
     conda:
@@ -89,12 +89,12 @@ rule adjust_sirv_names:
 rule standardize_gtf_files:
     input:
         sirv_four_transcriptome="results/setup/adjust_sirv_names/sirv_set_four.gtf",
-        gencode_transcriptome="results/setup/adjust_transcriptome_assembly_names/gencode.v49.primary_assembly.annotation.named.gtf",
+        gencode_transcriptome="results/setup/adjust_transcriptome_assembly_names/gencode.v45.primary_assembly.annotation.named.gtf",
     output:
         sirv_four_transcriptome="results/setup/standardize_gtf_files/sirv_set_four.gtf",
         sirv_gff="results/setup/standardize_gtf_files/sirv_set_four.gff",
-        gencode_transcriptome="results/setup/standardize_gtf_files/gencode.v49.primary_assembly.annotation.named.gtf",
-        gencode_gff="results/setup/standardize_gtf_files/gencode.v49.primary_assembly.annotation.named.gff",
+        gencode_transcriptome="results/setup/standardize_gtf_files/gencode.v45.primary_assembly.annotation.named.gtf",
+        gencode_gff="results/setup/standardize_gtf_files/gencode.v45.primary_assembly.annotation.named.gff",
         gencode_transcriptome_gmap="results/setup/standardize_gtf_files/gencode_map.txt",
         gencode_transcriptome_gmap_headered="results/setup/standardize_gtf_files/gencode_map_headered.txt",
         sirv_four_transcriptome_gmap="results/setup/standardize_gtf_files/sirv_set_four_map.txt",
@@ -148,9 +148,9 @@ rule make_db_files_sirv:
 
 rule make_db_files_gencode:
     input:
-        input_gtf="results/setup/standardize_gtf_files/gencode.v49.primary_assembly.annotation.named.gtf",
+        input_gtf="results/setup/standardize_gtf_files/gencode.v45.primary_assembly.annotation.named.gtf",
     output:
-        output_db="results/setup/make_db_files/gencode.v49.primary_assembly.annotation.named.db",
+        output_db="results/setup/make_db_files/gencode.v45.primary_assembly.annotation.named.db",
     log:
         "logs/setup/make_db_files/gencode.log",
     conda:
@@ -183,7 +183,7 @@ rule concatenate_genomes:
 rule concatenate_transcriptomes:
     input:
         sirv_four_transcriptome="results/setup/standardize_gtf_files/sirv_set_four.gtf",
-        gencode_transcriptome="results/setup/standardize_gtf_files/gencode.v49.primary_assembly.annotation.named.gtf",
+        gencode_transcriptome="results/setup/standardize_gtf_files/gencode.v45.primary_assembly.annotation.named.gtf",
     output:
         overall_transcriptome="results/setup/concatenate_transcriptomes/transcriptome.gtf",
     log:
@@ -197,7 +197,7 @@ rule concatenate_transcriptomes:
 
 rule convert_gtfs_to_beds_gencode:
     input:
-        gencode_gtf="results/setup/standardize_gtf_files/gencode.v49.primary_assembly.annotation.named.gtf",
+        gencode_gtf="results/setup/standardize_gtf_files/gencode.v45.primary_assembly.annotation.named.gtf",
         sirv_gtf="results/setup/standardize_gtf_files/sirv_set_four.gtf",
         overall_gtf="results/setup/concatenate_transcriptomes/transcriptome.gtf",
     output:
@@ -223,7 +223,7 @@ rule convert_gtfs_to_beds_gencode:
 rule extract_transcriptomes:
     input:
         gencode_genome="results/setup/download_genome/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna",
-        gencode_transcriptome="results/setup/adjust_transcriptome_assembly_names/gencode.v49.primary_assembly.annotation.named.gtf",
+        gencode_transcriptome="results/setup/adjust_transcriptome_assembly_names/gencode.v45.primary_assembly.annotation.named.gtf",
         joint_genome="results/setup/concatenate_genomes/genome.fa",
         joint_transcriptome="results/setup/concatenate_transcriptomes/transcriptome.gtf",
         sirv_genome="results/setup/adjust_sirv_names/sirv_set_four.fa",
@@ -372,7 +372,7 @@ rule create_lr_kallisto_index:
 rule create_simpleaf_index:
     input:
         genome="results/setup/download_genome/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna",
-        transcriptome="results/setup/adjust_transcriptome_assembly_names/gencode.v49.primary_assembly.annotation.named.gtf",
+        transcriptome="results/setup/adjust_transcriptome_assembly_names/gencode.v45.primary_assembly.annotation.named.gtf",
     output:
         directory("results/setup/create_simpleaf_index"),
         "results/setup/create_simpleaf_index/index/piscem_idx.sshash",
@@ -428,7 +428,7 @@ rule setup_install_isosceles:
 
 rule filter_tusco:
     input:
-        transcriptome="results/setup/adjust_transcriptome_assembly_names/gencode.v49.primary_assembly.annotation.named.gtf",
+        transcriptome="results/setup/adjust_transcriptome_assembly_names/gencode.v45.primary_assembly.annotation.named.gtf",
         tusco="config/tusco_human.tsv",
     output:
         transcriptome_without_tusco="results/setup/filter_tusco/gencode_no_tusco.gtf",
@@ -443,7 +443,7 @@ rule filter_tusco:
 
 rule filter_gencode:
     input:
-        transcriptome="results/setup/adjust_transcriptome_assembly_names/gencode.v49.primary_assembly.annotation.named.gtf",
+        transcriptome="results/setup/adjust_transcriptome_assembly_names/gencode.v45.primary_assembly.annotation.named.gtf",
         illumina="results/quantify_bulk_downsampled/format/run_salmon_illumina_corrected/1_15000000.0/illumina/gencode/transcript_counts_formatted.tsv",
         kinnex="results/quantify_bulk_downsampled/format/run_oarfish_lr/1_15000000.0/pb/gencode/transcript_counts_formatted.tsv",
         ont="results/quantify_bulk_downsampled/format/run_oarfish_lr/1_15000000.0/ont/gencode/transcript_counts_formatted.tsv",

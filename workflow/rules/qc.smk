@@ -6,7 +6,7 @@ rule star_solo_short_read:
         reads_1="/home/dwissel/data/roche_fmr1/illumina_sc/{sample}_R1.fastq.gz",
         reads_2="/home/dwissel/data/roche_fmr1/illumina_sc/{sample}_R2.fastq.gz",
         star_index="results/setup/index_star",
-        gtf="results/setup/standardize_gtf_files/gencode.v49.primary_assembly.annotation.named.gtf",
+        gtf="results/setup/standardize_gtf_files/gencode.v45.primary_assembly.annotation.named.gtf",
         whitelist="config/3M-february-2018.txt",
     output:
         bam="results/qc/star_solo/{sample}/Aligned.sortedByCoord.out.bam",
@@ -305,7 +305,7 @@ rule qc_align_genome_short_read:
     input:
         reads=get_fastq_for_star,
         star_index="results/setup/index_star",
-        gtf="results/setup/standardize_gtf_files/gencode.v49.primary_assembly.annotation.named.gtf",
+        gtf="results/setup/standardize_gtf_files/gencode.v45.primary_assembly.annotation.named.gtf",
     output:
         bam="results/qc/qc_align_genome_short_read/{read_number}/{platform}/{sample}.bam",
         idx="results/qc/qc_align_genome_short_read/{read_number}/{platform}/{sample}.bam.bai",
@@ -544,7 +544,7 @@ rule qc_prepare_sampled_read_quality_frame_short_read_bulk:
 
 rule qc_subsample_transcripts_three_prime_bias_binned:
     input:
-        transcriptome="results/setup/adjust_transcriptome_assembly_names/gencode.v49.primary_assembly.annotation.named.gtf",
+        transcriptome="results/setup/adjust_transcriptome_assembly_names/gencode.v45.primary_assembly.annotation.named.gtf",
         gencode_transcriptome="results/setup/extract_transcriptomes/gencode_transcriptome.fa",
     output:
         less_one_kb="results/qc/qc_subsample_transcripts_three_prime_bias_binned/lt1kb.gtf",
@@ -630,7 +630,7 @@ rule qc_calculate_three_prime_bias_binned_short_reads:
 
 rule qc_convert_gtf_to_bed:
     input:
-        "results/setup/download_transcriptome/gencode.v49.primary_assembly.annotation.gtf",
+        "results/setup/download_transcriptome/gencode.v45.primary_assembly.annotation.gtf",
     output:
         exons="results/qc/qc_convert_gtf_to_bed/exons.bed",
         genes="results/qc/qc_convert_gtf_to_bed/genes.bed",
@@ -726,7 +726,7 @@ rule qc_calculate_internal_priming:
     input:
         bam="results/qc/qc_align_genome/{tech}/{read_number}/{platform}/{sample}.bam",
         genome="results/setup/download_genome/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna",
-        transcriptome="results/setup/adjust_transcriptome_assembly_names/gencode.v49.primary_assembly.annotation.named.gtf",
+        transcriptome="results/setup/adjust_transcriptome_assembly_names/gencode.v45.primary_assembly.annotation.named.gtf",
     output:
         summary="results/qc/qc_calculate_internal_priming/{tech}/{read_number}/{platform}/{sample}_summary.txt",
         gene_count="results/qc/qc_calculate_internal_priming/{tech}/{read_number}/{platform}/{sample}_count.txt",

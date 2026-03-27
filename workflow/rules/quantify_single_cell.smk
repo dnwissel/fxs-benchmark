@@ -63,7 +63,7 @@ rule quantify_sc_run_bambu:
         "results/setup/install_bambu/done.txt",
         "results/preprocess/adjust_lr_sc_genome/{tech}/{subsample_number}_{number_to_sample}/{sample}.bam.bai",
         reads="results/preprocess/adjust_lr_sc_genome/{tech}/{subsample_number}_{number_to_sample}/{sample}.bam",
-        gencode_transcriptome="results/setup/standardize_gtf_files/gencode.v49.primary_assembly.annotation.named.gtf",
+        gencode_transcriptome="results/setup/standardize_gtf_files/gencode.v45.primary_assembly.annotation.named.gtf",
         gencode_genome="results/setup/download_genome/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna",
     output:
         "results/quantify_sc_run_bambu/{tech}/{subsample_number}_{number_to_sample}/{sample}.rds",
@@ -86,7 +86,7 @@ rule quantify_sc_run_isosceles:
         "results/setup/install_isosceles/done.txt",
         "results/preprocess/adjust_lr_sc_genome/{tech}/{subsample_number}_{number_to_sample}/{sample}.bam.bai",
         reads="results/preprocess/adjust_lr_sc_genome/{tech}/{subsample_number}_{number_to_sample}/{sample}.bam",
-        gencode_transcriptome="results/setup/standardize_gtf_files/gencode.v49.primary_assembly.annotation.named.gtf",
+        gencode_transcriptome="results/setup/standardize_gtf_files/gencode.v45.primary_assembly.annotation.named.gtf",
         gencode_genome="results/setup/download_genome/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna",
     output:
         "results/quantify_sc_run_isosceles/{tech}/{subsample_number}_{number_to_sample}/{sample}.rds",
