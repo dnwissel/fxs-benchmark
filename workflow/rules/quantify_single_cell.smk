@@ -308,3 +308,50 @@ rule format_sce_lr:
     threads: 4
     script:
         "../scripts/r/format_sce_lr.R"
+
+rule filter_sce:
+    input:
+        gtf="results/setup/standardize_gtf_files/gencode.v45.primary_assembly.annotation.named.gtf",
+        ill_gene_sce="results/format_quantify_subsampled/gencode/illumina/{subsample_number}_{number_to_sample}/salmon/sce/gene_sce.rds",
+        pb_gene_sce="results/format_quantify_subsampled/gencode/pb/{subsample_number}_{number_to_sample}/oarfish/sce/gene_sce.rds",
+        ont_gene_sce="results/format_quantify_subsampled/gencode/ont/{subsample_number}_{number_to_sample}/oarfish/sce/gene_sce.rds"
+    output:
+        ill_gene_sce="results/format_quantify_subsampled/gencode/illumina/{subsample_number}_{number_to_sample}/salmon/sce/gene_sce.filtered.rds",
+        pb_gene_sce="results/format_quantify_subsampled/gencode/pb/{subsample_number}_{number_to_sample}/oarfish/sce/gene_sce.filtered.rds",
+        ont_gene_sce="results/format_quantify_subsampled/gencode/ont/{subsample_number}_{number_to_sample}/oarfish/sce/gene_sce.filtered.rds"
+    params:
+        ill_tot_counts_filter = 300,
+        ill_mito_pct_filter = 25,
+        ill_n_detected_genes_filter = 400,
+        pb_tot_counts_filter = 500,
+        pb_mito_pct_filter = 20,
+        pb_n_detected_genes_filter = 400,
+        ont_tot_counts_filter = 100,
+        ont_mito_pct_filter = 20,
+        ont_n_detected_genes_filter = 400,
+        mgv_bio_t = 0.01,
+        mgv_fdr_t = 0.1,
+        ill_mgv_mean_t = 0.2,
+        pb_mgv_mean_t = 0.001,
+        ont_mgv_mean_t = 0.1
+    log:
+        #TODO: choose path
+    conda:
+        "../envs/r/sce.yaml"
+    script:
+        "../scripts/r/filter_sce.R"
+
+rule draw_umap:
+    input:
+        sce="results/format_quantify_subsampled/gencode/illumina/{subsample_number}_{number_to_sample}/salmon/sce/gene_sce.filtered.rds",
+        md=#TODO: path to metadata csv
+    output:
+        plotdir=#TODO: choose path
+    params:
+        k = 60
+    log:
+        #TODO: choose path
+    conda:
+        "../envs/r/sce.yaml"
+    script:
+        "../scripts/r/draw_umap_sc.R"

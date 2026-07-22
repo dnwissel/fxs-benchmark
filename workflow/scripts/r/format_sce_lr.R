@@ -1,3 +1,7 @@
+log <- file(snakemake@log[[1]], open = "wt")
+sink(log, type = "output")
+sink(log, type = "message")
+
 suppressPackageStartupMessages({
   library(vroom)
   library(SingleCellExperiment)
@@ -86,3 +90,6 @@ gene_pb_merged <- gene_pb_merged %>% rownames_to_column("gene_id")
 
 write.table(tx_pb_merged, file = snakemake@output[["tx_pb"]], sep = "\t", quote = FALSE, row.names = FALSE)
 write.table(gene_pb_merged, file = snakemake@output[["gene_pb"]], sep = "\t", quote = FALSE, row.names = FALSE)
+
+sink()
+sink()
