@@ -51,7 +51,7 @@ plot_figure_03_e <- function(output_pdf, output_svg) {
   quant_eff_df$Tool <- factor(quant_eff_df$Tool, levels = c("Bambu", "Isoquant", "Isosceles", "Kallisto", "Miniquant", "Oarfish"))
   cols <- carto_pal(7, "Safe")
   quant_eff_df$Tech <- factor(quant_eff_df$Tech, levels = c("ONT", "PB"))
-  panel_f <- ggplot(quant_eff_df, aes(x = Tool, fill = Tool, y = Efficiency)) + geom_bar(stat = "identity") + facet_grid(~Tech, scales = "free", space = "free_x") + theme_big_simple() + scale_fill_manual(values = cols) + labs(y = "Efficiency", x = "", fill = "") + theme(axis.title.x = element_blank(), axis.text.x = element_blank(), axis.ticks.x = element_blank())
+  panel_f <- ggplot(quant_eff_df, aes(x = Tool, fill = Tool, y = Efficiency)) + geom_bar(stat = "identity") + facet_grid(~Tech, scales = "free", space = "free_x") + theme_big_simple() + scale_fill_manual(values = cols) + labs(y = "Read utilization", x = "", fill = "") + theme(axis.title.x = element_blank(), axis.text.x = element_blank(), axis.ticks.x = element_blank())
 
   if (!exists("panel_f")) {
     stop("Panel object not found: panel_f", call. = FALSE)
