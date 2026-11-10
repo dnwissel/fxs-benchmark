@@ -1,0 +1,15 @@
+name: sce
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - r-base
+  - r-dplyr
+  - r-ggplot2
+  - r-harmony
+  - bioconductor-scater
+  - bioconductor-scdblfinder
+  - bioconductor-scran
+  - bioconductor-scuttle
+  - bioconductor-singlecellexperiment
