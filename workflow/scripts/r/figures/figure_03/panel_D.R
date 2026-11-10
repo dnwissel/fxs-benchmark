@@ -69,17 +69,32 @@ plot_figure_03_d <- function(output_pdf, output_svg) {
       colnames(pb_gene_cts_list[[m]]) <- paste("PB", m, colnames(pb_gene_cts_list[[m]]), sep = "_")
       return(pb_gene_cts_list[[m]])
   })
-  ill_gene_tpm <- ill_gene_tpm %>% dplyr::select(which(grepl("E3", colnames(ill_gene_tpm))))
+#   ill_gene_tpm <- ill_gene_tpm %>% dplyr::select(which(grepl("E3", colnames(ill_gene_tpm))))
   ill_gene_tpm <- do.call(cbind, replicate(length(quant_methods), ill_gene_tpm, simplify = FALSE))
   ont_gene_cts <- do.call(cbind, ont_gene_cts_list)
-  ont_gene_cts <- ont_gene_cts %>% dplyr::select(which(grepl("E3", colnames(ont_gene_cts))))
+#   ont_gene_cts <- ont_gene_cts %>% dplyr::select(which(grepl("E3", colnames(ont_gene_cts))))
   pb_gene_cts <- do.call(cbind, pb_gene_cts_list)
-  pb_gene_cts <- pb_gene_cts %>% dplyr::select(which(grepl("E3", colnames(pb_gene_cts))))
+#   pb_gene_cts <- pb_gene_cts %>% dplyr::select(which(grepl("E3", colnames(pb_gene_cts))))
   gene_log_expr <- cbind(log2(ill_gene_tpm + config$log_expr_pseudo), log2(edgeR::cpm(cbind(ont_gene_cts, pb_gene_cts), log = FALSE, normalized.lib.sizes = TRUE) + config$log_expr_pseudo))
-  gene_abs_quant_df <- gene_log_expr %>% as.data.frame() %>% tibble::rownames_to_column("gene_id") %>% tidyr::pivot_longer(cols = -gene_id, names_to = "Sample", values_to = "log_expr") %>% dplyr::mutate(Technology = sapply(strsplit(Sample, "_"), function(x) x[[1]]), Method = sapply(strsplit(Sample, "_"), function(x) x[[2]]), Replicate = sapply(Sample, function(x) substr(x, nchar(x), nchar(x)))) %>% dplyr::select(-Sample) %>% tidyr::pivot_wider(id_cols = c(gene_id, Method, Replicate), names_from = Technology, 
-      values_from = log_expr)
+  gene_abs_quant_df <- gene_log_expr %>%
+    as.data.frame() %>%
+    tibble::rownames_to_column("gene_id") %>% 
+    tidyr::pivot_longer(cols = -gene_id, names_to = "Sample", values_to = "log_expr") %>% 
+    dplyr::mutate(Technology = sapply(strsplit(Sample, "_"), function(x) x[[1]]),
+                  Method = sapply(strsplit(Sample, "_"), function(x) x[[2]]),
+                  Condition = ifelse(grepl("E3", Sample), "E3", "IsoB11"),
+                  Replicate = sapply(Sample, function(x) substr(x, nchar(x), nchar(x)))) %>%
+    dplyr::select(-Sample) %>%
+    tidyr::pivot_wider(id_cols = c(gene_id, Method, Condition, Replicate),
+                    names_from = Technology, values_from = log_expr)
   gene_abs_quant_df$Method <- factor(gene_abs_quant_df$Method, levels = c("Bambu", "Isoquant", "Isosceles", "Kallisto", "Miniquant", "Oarfish"))
-  coldata_ill <- data.frame(files = c("results/run_salmon_illumina/1_15000000.0/gencode/E3-1/illumina/quant.sf", "results/run_salmon_illumina/1_15000000.0/gencode/E3-2/illumina/quant.sf", "results/run_salmon_illumina/1_15000000.0/gencode/E3-3/illumina/quant.sf"), names = c("E3-1", "E3-2", "E3-3"))
+  coldata_ill <- data.frame(files = c("results/run_salmon_illumina/1_15000000.0/gencode/E3-1/illumina/quant.sf",
+                                      "results/run_salmon_illumina/1_15000000.0/gencode/E3-2/illumina/quant.sf",
+                                      "results/run_salmon_illumina/1_15000000.0/gencode/E3-3/illumina/quant.sf",
+                                      "results/run_salmon_illumina/1_15000000.0/gencode/IsoB11-1/illumina/quant.sf",
+                                      "results/run_salmon_illumina/1_15000000.0/gencode/IsoB11-2/illumina/quant.sf",
+                                      "results/run_salmon_illumina/1_15000000.0/gencode/IsoB11-3/illumina/quant.sf"),
+                            names = c("E3-1", "E3-2", "E3-3", "IsoB11-1", "IsoB11-2", "IsoB11-3"))
   se <- tximeta(coldata_ill)
   se <- se[grepl("^ENST", rownames(se))]
   illumina_se <- fishpond::computeInfRV(se)
@@ -142,39 +157,69 @@ plot_figure_03_d <- function(output_pdf, output_svg) {
       colnames(pb_tx_cts_list[[m]]) <- paste("PB", m, colnames(pb_tx_cts_list[[m]]), sep = "_")
       return(pb_tx_cts_list[[m]])
   })
-  ill_tx_tpm <- ill_tx_tpm %>% dplyr::select(which(grepl("E3", colnames(ill_tx_tpm))))
+#   ill_tx_tpm <- ill_tx_tpm %>% dplyr::select(which(grepl("E3", colnames(ill_tx_tpm))))
   ill_tx_tpm <- do.call(cbind, replicate(length(quant_methods), ill_tx_tpm, simplify = FALSE))
   ont_tx_cts <- do.call(cbind, ont_tx_cts_list)
-  ont_tx_cts <- ont_tx_cts %>% dplyr::select(which(grepl("E3", colnames(ont_tx_cts))))
+#   ont_tx_cts <- ont_tx_cts %>% dplyr::select(which(grepl("E3", colnames(ont_tx_cts))))
   pb_tx_cts <- do.call(cbind, pb_tx_cts_list)
-  pb_tx_cts <- pb_tx_cts %>% dplyr::select(which(grepl("E3", colnames(pb_tx_cts))))
+#   pb_tx_cts <- pb_tx_cts %>% dplyr::select(which(grepl("E3", colnames(pb_tx_cts))))
   tx_log_expr <- cbind(log2(ill_tx_tpm + config$log_expr_pseudo), log2(edgeR::cpm(cbind(ont_tx_cts, pb_tx_cts), log = FALSE, normalized.lib.sizes = TRUE) + config$log_expr_pseudo))
-  tx_abs_quant_df <- tx_log_expr %>% as.data.frame() %>% tibble::rownames_to_column("transcript_id") %>% tidyr::pivot_longer(cols = -transcript_id, names_to = "Sample", values_to = "log_expr") %>% dplyr::mutate(Technology = sapply(strsplit(Sample, "_"), function(x) x[[1]]), Method = sapply(strsplit(Sample, "_"), function(x) x[[2]]), Replicate = sapply(Sample, function(x) substr(x, nchar(x), nchar(x)))) %>% dplyr::select(-Sample) %>% tidyr::pivot_wider(id_cols = c(transcript_id, Method, Replicate), 
-      names_from = Technology, values_from = log_expr)
-  gene_abs_quant_df$Method <- factor(gene_abs_quant_df$Method, levels = c("Bambu", "Isoquant", "Isosceles", "Kallisto", "Miniquant", "Oarfish"))
+  tx_abs_quant_df <- tx_log_expr %>% 
+    as.data.frame() %>%
+    tibble::rownames_to_column("transcript_id") %>% 
+    tidyr::pivot_longer(cols = -transcript_id, names_to = "Sample", values_to = "log_expr") %>% 
+    dplyr::mutate(Technology = sapply(strsplit(Sample, "_"), function(x) x[[1]]),
+                  Method = sapply(strsplit(Sample, "_"), function(x) x[[2]]),
+                  Condition = ifelse(grepl("E3", Sample), "E3", "IsoB11"),
+                  Replicate = sapply(Sample, function(x) substr(x, nchar(x), nchar(x)))) %>%
+    dplyr::select(-Sample) %>%
+    tidyr::pivot_wider(id_cols = c(transcript_id, Method, Condition, Replicate),
+                    names_from = Technology, values_from = log_expr)
+  tx_abs_quant_df$Method <- factor(tx_abs_quant_df$Method, levels = c("Bambu", "Isoquant", "Isosceles", "Kallisto", "Miniquant", "Oarfish"))
   num_quant_methods_bulk <- 7
   cols <- carto_pal(num_quant_methods_bulk, "Safe")
   plt_frame_transcript <- tx_abs_quant_df
   plt_frame_gene <- gene_abs_quant_df
   calculate_correlations <- function(df) {
-      df %>% group_by(Method) %>% summarise(ONT_vs_Illumina = cor(ONT, Illumina, method = "pearson"), PB_vs_Illumina = cor(PB, Illumina, method = "pearson"), .groups = "drop")
+      df %>% group_by(Method, Condition) %>% summarise(ONT_vs_Illumina = cor(ONT, Illumina, method = "pearson"), PB_vs_Illumina = cor(PB, Illumina, method = "pearson"), .groups = "drop")
   }
   data_list <- list(Gene = plt_frame_gene, Transcript = plt_frame_transcript)
   combined_corr <- bind_rows(lapply(data_list, calculate_correlations), .id = "Level")
-  corr_long <- combined_corr %>% pivot_longer(cols = c(ONT_vs_Illumina, PB_vs_Illumina), names_to = "Platform", values_to = "Correlation") %>% mutate(Platform = str_remove(Platform, "_vs_Illumina"), Heatmap_Column = str_c(Method, " (", Platform, ")")) %>% dplyr::select(Level, Method, Platform, Heatmap_Column, Correlation)
-  heatmap_matrix_df <- corr_long %>% pivot_wider(names_from = Level, values_from = Correlation)
-  heatmap_matrix <- heatmap_matrix_df %>% column_to_rownames("Heatmap_Column")
+  corr_long <- combined_corr %>% 
+    pivot_longer(cols = c(ONT_vs_Illumina, PB_vs_Illumina), names_to = "Platform", values_to = "Correlation") %>% 
+    mutate(Platform = str_remove(Platform, "_vs_Illumina"), Heatmap_Column = str_c(Method, " (", Platform, ")"), Column = str_c(Level, "_", Condition))
+  heatmap_matrix <- corr_long %>%
+    dplyr::select(Heatmap_Column, Column, Correlation) %>%
+    pivot_wider(names_from = Column, values_from = Correlation) %>%
+    column_to_rownames("Heatmap_Column")
   methods_order <- c("Bambu", "Isoquant", "Isosceles", "Kallisto", "Miniquant", "Oarfish")
-  col_order_ont <- paste0(methods_order, " (ONT)")
-  col_order_pb <- paste0(methods_order, " (PB)")
-  final_col_order <- c(col_order_ont, col_order_pb)
-  heatmap_matrix <- heatmap_matrix[final_col_order, ]
-  heatmap_matrix <- heatmap_matrix[, c("Gene", "Transcript")]
+  final_col_order <- c(paste0(methods_order, " (ONT)"), paste0(methods_order, " (PB)"))
+  heatmap_matrix <- heatmap_matrix[final_col_order, c("Gene_E3", "Transcript_E3", "Gene_IsoB11", "Transcript_IsoB11")]
   annotation_df <- data.frame(Platform = str_extract(rownames(heatmap_matrix), "ONT|PB"), Method = str_remove(rownames(heatmap_matrix), " \\(ONT\\)| \\(PB\\)"))
   my_annotation_colors <- list(Platform = c(ONT = "#01799bff", PB = "#e21b92ff"), Method = c(Bambu = cols[1], Isoquant = cols[2], Isosceles = cols[3], Kallisto = cols[4], Miniquant = cols[5], Oarfish = cols[6]))
   my_colors <- colorRampPalette(brewer.pal(n = 7, name = "YlOrRd"))(100)
-  pheatmap_plot <- pheatmap(heatmap_matrix, main = "", display_numbers = TRUE, number_format = "%.2f", fontsize_number = 20, cluster_rows = FALSE, cluster_cols = FALSE, color = my_colors, border_color = "white", show_colnames = TRUE, show_rownames = FALSE, angle_col = 0, fontsize = 24, fontsize_col = 24, annotation_row = annotation_df, annotation_colors = my_annotation_colors, filename = NA, silent = TRUE)
-  ggplot_heatmap <- as.ggplot(pheatmap_plot$gtable)
+  pheatmap_plot <- pheatmap(heatmap_matrix, main = "", display_numbers = TRUE, number_format = "%.2f",
+                          fontsize_number = 16, cluster_rows = FALSE, cluster_cols = FALSE,
+                          color = my_colors, border_color = "white", show_colnames = TRUE,
+                          labels_col = c("Gene", "Transcript", "Gene", "Transcript"),
+                          show_rownames = FALSE, angle_col = 0, fontsize = 24, fontsize_col = 18,
+                          annotation_row = annotation_df, annotation_colors = my_annotation_colors,
+                          filename = NA, silent = TRUE)
+  
+  ##### MADE BY CLAUDE, TEST IT (to show E3 vs IsoB11 on top of the heatmaps)
+  gt <- pheatmap_plot$gtable
+  m <- gt$layout[gt$layout$name == "matrix", ]
+  gt <- gtable::gtable_add_rows(gt, grid::unit(45, "pt"), pos = 0)
+  groups <- grid::gTree(children = grid::gList(
+  grid::segmentsGrob(x0 = grid::unit(c(0.03, 0.53), "npc"), x1 = grid::unit(c(0.47, 0.97), "npc"),
+                     y0 = grid::unit(0.3, "npc"), y1 = grid::unit(0.3, "npc"),
+                     gp = grid::gpar(lwd = 3)),
+  grid::textGrob(c("E3", "IsoB11"), x = grid::unit(c(0.25, 0.75), "npc"), y = grid::unit(0.65, "npc"),
+                 gp = grid::gpar(fontsize = 24))))
+  gt <- gtable::gtable_add_grob(gt, groups, t = 1, l = m$l, r = m$r, name = "col_groups", clip = "off")
+  ##### END CLAUDE
+
+  ggplot_heatmap <- as.ggplot(gt)
 
   if (!exists("ggplot_heatmap")) {
     stop("Panel object not found: ggplot_heatmap", call. = FALSE)
